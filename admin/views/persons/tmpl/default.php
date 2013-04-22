@@ -1,5 +1,10 @@
-<?php defined('_JEXEC') or die('Restricted access');
+<?php 
+defined('_JEXEC') or die('Restricted access');
 jimport('joomla.filesystem.file');
+
+$user		= JFactory::getUser();
+$userId		= $user->get('id');
+
 ?>
 <script>
 	function searchPerson(val)
@@ -108,8 +113,9 @@ jimport('joomla.filesystem.file');
 					{
 						$link       = JRoute::_('index.php?option=com_sportsmanagement&task=person.edit&id='.$row->id);
 						$checked    = JHTML::_('grid.checkedout',$row,$i);
+                        $canCheckin	= $user->authorise('core.manage','com_checkin') || $row->checked_out == $userId || $row->checked_out == 0;
 						$is_checked = JTable::isCheckedOut($this->user->get('id'),$row->checked_out);
-            $published  = JHTML::_('grid.published',$row,$i, 'tick.png','publish_x.png','persons.');
+                        $published  = JHTML::_('grid.published',$row,$i, 'tick.png','publish_x.png','persons.');
 						?>
 						<tr class="<?php echo "row$k"; ?>">
 							<td class="center"><?php echo $this->pagination->getRowOffset($i); ?></td>
@@ -118,7 +124,11 @@ jimport('joomla.filesystem.file');
 							if ($is_checked)
 							{
 								$inputappend=' disabled="disabled" ';
-								?><td class="center">&nbsp;</td><?php
+								?><td class="center">
+                                	<?php if ($row->checked_out) : ?>
+						<?php echo JHTML::_('grid.checkedout', $row, $i, $row->checked_out_time, 'persons.', $canCheckin); ?>
+					<?php endif; ?>
+                    </td><?php
 							}
 							else
 							{

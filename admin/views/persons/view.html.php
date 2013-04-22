@@ -194,20 +194,22 @@ class sportsmanagementViewPersons extends JView
 	*/
 	protected function addToolbar()
 	{
-		// Set toolbar items for the page
+		//$user		= JFactory::getUser();
+        // Set toolbar items for the page
 		JToolBarHelper::title(JText::_('COM_SPORTSMANAGEMENT_ADMIN_PERSONS_TITLE'),'user');
 
 // 		JToolBarHelper::publishList('person.publish');
 // 		JToolBarHelper::unpublishList('person.unpublish');
 		JToolBarHelper::publish('persons.publish', 'JTOOLBAR_PUBLISH', true);
 		JToolBarHelper::unpublish('persons.unpublish', 'JTOOLBAR_UNPUBLISH', true);
+        JToolBarHelper::checkin('persons.checkin');
 		JToolBarHelper::divider();
 		
 		JToolBarHelper::apply('person.saveshort');
 		JToolBarHelper::editList('person.edit');
 		JToolBarHelper::addNew('person.add');
-		JToolBarHelper::custom('person.import','upload','upload',JText::_('COM_SPORTSMANAGEMENT_GLOBAL_CSV_IMPORT'),false);
-		JToolBarHelper::archiveList('person.export',JText::_('COM_SPORTSMANAGEMENT_GLOBAL_XML_EXPORT'));
+		JToolBarHelper::custom('person.import','upload','upload',JText::_('JTOOLBAR_UPLOAD'),false);
+		JToolBarHelper::archiveList('person.export',JText::_('JTOOLBAR_EXPORT'));
 		JToolBarHelper::deleteList('','persons.delete', 'JTOOLBAR_DELETE');
 		JToolBarHelper::divider();
 		//JToolBarHelper::onlinehelp();
